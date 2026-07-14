@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Zoho Books Field Automation
 // @namespace    https://github.com/jamesGlowacki/zoho-books-automation
-// @version      0.1.0
+// @version      0.1.1
 // @description  Pre-save client-side field population for Zoho Books. Engine + feature registry, built to grow across pages.
 // @author       James
 // @match        https://books.zoho.com/*
@@ -166,10 +166,8 @@
     const CONFIG = {
       // --- 1. URL pattern for the invoice create/edit page -------------------
       // Return true when we're on the page that has these fields.
-      // Inspect your real URL and tighten this. Examples:
-      //   url.includes('/invoices/new')
-      //   /\/invoices\/(new|\d+\/edit)/.test(url)
-      matchesPage: (url) => /\/invoices\//.test(url), // TODO: tighten to your real path
+      // Real URL is hash-routed: https://books.zoho.com/app/<orgId>#/invoices/new
+      matchesPage: (url) => /\/invoices\/(new|\d+\/edit)/.test(url),
 
       // --- 2. Selectors — grab from devtools (Inspect each field) ------------
       // Prefer a stable [name="..."] or #id over Zoho's dynamic class chains.
