@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Zoho Books Field Automation
 // @namespace    https://github.com/jamesGlowacki/zoho-books-automation
-// @version      0.1.1
+// @version      0.2.0
 // @description  Pre-save client-side field population for Zoho Books. Engine + feature registry, built to grow across pages.
 // @author       James
 // @match        https://books.zoho.com/*
@@ -182,8 +182,8 @@
       },
 
       // --- 3. The math -------------------------------------------------------
-      // charge = cost * (1 + markup% / 100).  100 @ 30% -> 130.00
-      compute: (cost, markupPercent) => cost * (1 + markupPercent / 100),
+      // charge = cost / (1 - markup% / 100).  100 @ 30% -> 142.86
+      compute: (cost, markupPercent) => cost / (1 - markupPercent / 100),
 
       // Decimal places to write into the charge field.
       decimals: 2,
