@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Zoho Books Field Automation
 // @namespace    https://github.com/jamesGlowacki/zoho-books-automation
-// @version      0.2.1
+// @version      0.3.0
 // @description  Pre-save client-side field population for Zoho Books. Engine + feature registry, built to grow across pages.
 // @author       James
 // @match        https://books.zoho.com/*
