@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Zoho Books Field Automation
 // @namespace    https://github.com/jamesGlowacki/zoho-books-automation
-// @version      0.2.1
+// @version      0.3.0
 // @description  Pre-save client-side field population for Zoho Books. Engine + feature registry, built to grow across pages.
 // @author       James
 // @match        https://books.zoho.com/*
@@ -217,7 +217,7 @@
       // Write to the charge field only when the value actually changes. This keeps
       // us from re-dispatching input/change (and marking the form dirty) on every
       // recompute that lands on the same result — e.g. priming an existing invoice
-      // on load, or clearing an already-blank field.
+      // on load with values that already match.
       const writeCharge = (value) => {
         if (String(chargeEl.value).trim() === String(value).trim()) return;
         Core.setNativeValue(chargeEl, value);
@@ -227,12 +227,12 @@
         const costRaw   = String(costEl.value).trim();
         const markupRaw = String(markupEl.value).trim();
 
-        // If EITHER source is fully erased, the charge is undefined — blank it out.
-        // writeCharge's equality check means a genuinely untouched form (charge
-        // already empty) stays untouched, so we never dirty it on load.
+        // We only own the charge field when BOTH sources are populated. If either
+        // is blank the inputs are incomplete, so leave whatever is in the charge
+        // field alone — including a value the user typed by hand. Clearing a
+        // source must never wipe the charge.
         if (costRaw === '' || markupRaw === '') {
-          writeCharge('');
-          log(`source cleared (cost="${costRaw}" markup="${markupRaw}") -> charge blanked`);
+          log(`source incomplete (cost="${costRaw}" markup="${markupRaw}") -> charge left as-is`);
           return;
         }
 
